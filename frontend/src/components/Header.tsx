@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import { Button } from "./ui/button"
 import { Building, Menu } from "lucide-react"
+import { ModeToggle } from "./ThemeSwitcher"
 
 export function Header() {
   const location = useLocation()
@@ -37,6 +38,7 @@ export function Header() {
 
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
+            <ModeToggle />
             <Link to="/login">
               <Button variant="ghost">Sign In</Button>
             </Link>
