@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
 import { StatCard } from '../components/StatCard'
 import { Header } from '../components/Header'
 import { Chat } from '../components/Chat'
@@ -32,14 +31,9 @@ import {
   Settings,
   Bell,
   Eye,
-  ArrowUpRight,
-  ArrowDownRight,
   BarChart3,
   Activity,
   Shield,
-  Edit,
-  Save,
-  User,
   LineChart,
   Lightbulb,
   Newspaper,
@@ -48,29 +42,8 @@ import {
   BookOpen
 } from 'lucide-react'
 
-interface CustomerProfile {
-  name: string
-  email: string
-  phone: string
-  address: string
-  riskTolerance: string
-  investmentGoals: string
-  communicationPreference: string
-}
-
 export function CustomerDashboard() {
   const [activeTab, setActiveTab] = useState('overview')
-  const [isEditingProfile, setIsEditingProfile] = useState(false)
-  const [profileData, setProfileData] = useState<CustomerProfile>({
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@meridianpension.com',
-    phone: '+1 (555) 123-4567',
-    address: '123 Financial District, New York, NY 10004',
-    riskTolerance: 'Moderate',
-    investmentGoals: 'Long-term Growth, Retirement Planning',
-    communicationPreference: 'Email'
-  })
-  const [isSaving, setIsSaving] = useState(false)
 
   // Mock data for customer dashboard
   const portfolioStats = [
@@ -79,68 +52,28 @@ export function CustomerDashboard() {
       value: "$2,847,320",
       change: "+$87,450 (3.17%)",
       changeType: "positive" as const,
-      icon: DollarSign,
-      description: "As of September 28, 2025"
+      icon: DollarSign
     },
     {
       title: "YTD Performance",
       value: "+12.4%",
-      change: "+2.8% vs benchmark",
+      change: "+2.1% this month",
       changeType: "positive" as const,
-      icon: TrendingUp,
-      description: "Outperforming S&P 500"
-    },
-    {
-      title: "Monthly Return",
-      value: "+2.1%",
-      change: "vs +1.8% last month",
-      changeType: "positive" as const,
-      icon: BarChart3,
-      description: "Above target allocation"
+      icon: TrendingUp
     },
     {
       title: "Risk Score",
       value: "7.2/10",
-      change: "Moderate Risk",
+      change: "Moderate risk",
       changeType: "neutral" as const,
-      icon: Shield,
-      description: "Within risk tolerance"
-    }
-  ]
-
-  const recentTransactions = [
-    {
-      id: 1,
-      date: "2025-09-28",
-      type: "Buy",
-      security: "VANGUARD S&P 500 ETF",
-      symbol: "VOO",
-      quantity: 150,
-      price: "$421.35",
-      amount: "$63,202.50",
-      status: "Completed"
+      icon: Activity
     },
     {
-      id: 2,
-      date: "2025-09-25",
-      type: "Dividend",
-      security: "MICROSOFT CORP",
-      symbol: "MSFT",
-      quantity: 200,
-      price: "$2.72",
-      amount: "$544.00",
-      status: "Completed"
-    },
-    {
-      id: 3,
-      date: "2025-09-23",
-      type: "Sell",
-      security: "TESLA INC",
-      symbol: "TSLA",
-      quantity: 50,
-      price: "$251.05",
-      amount: "$12,552.50",
-      status: "Completed"
+      title: "Total Contributions",
+      value: "$1,250,000",
+      change: "+$50K this year",
+      changeType: "positive" as const,
+      icon: PieChart
     }
   ]
 
@@ -170,69 +103,6 @@ export function CustomerDashboard() {
       unread: false
     }
   ]
-
-  const holdings = [
-    {
-      symbol: "VOO",
-      name: "Vanguard S&P 500 ETF",
-      quantity: 850,
-      currentPrice: "$421.35",
-      marketValue: "$358,147.50",
-      dayChange: "+1.2%",
-      totalReturn: "+15.3%",
-      allocation: "25.8%"
-    },
-    {
-      symbol: "MSFT",
-      name: "Microsoft Corporation",
-      quantity: 400,
-      currentPrice: "$422.89",
-      marketValue: "$169,156.00",
-      dayChange: "+0.8%",
-      totalReturn: "+22.1%",
-      allocation: "12.2%"
-    },
-    {
-      symbol: "AAPL",
-      name: "Apple Inc",
-      quantity: 300,
-      currentPrice: "$189.46",
-      marketValue: "$56,838.00",
-      dayChange: "-0.5%",
-      totalReturn: "+8.7%",
-      allocation: "4.1%"
-    }
-  ]
-
-  // Handler for saving profile changes
-  const handleSaveProfile = async () => {
-    try {
-      setIsSaving(true)
-      
-      // TODO: Replace with actual API call
-      // const response = await fetch('/api/customer/profile', {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${token}`
-      //   },
-      //   body: JSON.stringify(profileData)
-      // })
-      // 
-      // if (!response.ok) throw new Error('Failed to update profile')
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      console.log('Profile updated:', profileData)
-      setIsEditingProfile(false)
-    } catch (error) {
-      console.error('Failed to save profile:', error)
-      // TODO: Show error message to user
-    } finally {
-      setIsSaving(false)
-    }
-  }
 
   const messages = [
     {

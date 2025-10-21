@@ -1,0 +1,33 @@
+# Copy this file to terraform.tfvars and customize for your environment
+
+# GCP Configuration
+project_id      = "your-gcp-project-id"
+region          = "us-central1"
+bucket_location = "US"  # US, EU, ASIA, or specific region
+environment     = "production"
+
+# Project Configuration
+project_name = "customer-portal"
+
+# Custom Domain (Optional)
+# Uncomment and configure if using a custom domain
+# domain_names  = ["portal.example.com"]
+# dns_zone_name = "example-com"  # Cloud DNS zone name (without domain)
+
+# Cloud Armor Configuration
+enable_cloud_armor     = true
+rate_limit_threshold   = 100  # Requests per minute per IP
+enable_ddos_protection = true
+
+# Block specific countries (optional)
+# blocked_countries = ["CN", "RU"]
+
+# Backend API URL (for frontend environment configuration)
+# backend_api_url = "https://api.example.com"
+
+# Additional Labels
+labels = {
+  owner       = "devops-team"
+  cost_center = "engineering"
+  compliance  = "gdpr"
+}

@@ -1,20 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
-import { Input } from './ui/input'
 import { 
   Target, 
   TrendingUp, 
-  Calendar, 
   DollarSign,
   PieChart,
   Calculator,
-  Plus,
   Edit,
   CheckCircle,
-  Clock,
-  AlertTriangle,
   Home,
   GraduationCap,
   Plane,
@@ -38,23 +33,14 @@ interface RetirementProjection {
   age: number
   year: number
   portfolioValue: number
+  contributions: number
+  growthRate: number
   monthlyIncome: number
   confidenceLevel: number
 }
 
-interface FinancialMilestone {
-  id: string
-  title: string
-  description: string
-  targetValue: number
-  currentValue: number
-  isCompleted: boolean
-  category: 'net-worth' | 'income' | 'savings' | 'investment'
-}
-
-export const GoalsPlanning: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('overview')
-  const [showAddGoal, setShowAddGoal] = useState(false)
+export function GoalsPlanning() {
+  const [activeTab, setActiveTab] = useState<'goals' | 'planning' | 'projections'>('goals')
 
   // Mock data for financial goals
   const goals: Goal[] = [
@@ -110,40 +96,9 @@ export const GoalsPlanning: React.FC = () => {
 
   // Mock retirement projections
   const retirementProjections: RetirementProjection[] = [
-    { age: 65, year: 2045, portfolioValue: 1500000, monthlyIncome: 6250, confidenceLevel: 85 },
-    { age: 67, year: 2047, portfolioValue: 1680000, monthlyIncome: 7000, confidenceLevel: 90 },
-    { age: 70, year: 2050, portfolioValue: 1890000, monthlyIncome: 7875, confidenceLevel: 95 }
-  ]
-
-  // Mock financial milestones
-  const milestones: FinancialMilestone[] = [
-    {
-      id: '1',
-      title: 'Net Worth: $500K',
-      description: 'Achieve half a million in total net worth',
-      targetValue: 500000,
-      currentValue: 485000,
-      isCompleted: false,
-      category: 'net-worth'
-    },
-    {
-      id: '2',
-      title: '6-Month Emergency Fund',
-      description: 'Save 6 months of living expenses',
-      targetValue: 50000,
-      currentValue: 42000,
-      isCompleted: false,
-      category: 'savings'
-    },
-    {
-      id: '3',
-      title: 'Max 401k Contribution',
-      description: 'Contribute maximum to 401k for the year',
-      targetValue: 23000,
-      currentValue: 23000,
-      isCompleted: true,
-      category: 'investment'
-    }
+    { age: 65, year: 2045, portfolioValue: 1500000, monthlyIncome: 6250, confidenceLevel: 85, contributions: 0, growthRate: 7.5 },
+    { age: 67, year: 2047, portfolioValue: 1680000, monthlyIncome: 7000, confidenceLevel: 90, contributions: 0, growthRate: 7.5 },
+    { age: 70, year: 2050, portfolioValue: 1890000, monthlyIncome: 7875, confidenceLevel: 95, contributions: 0, growthRate: 7.5 }
   ]
 
   const getGoalIcon = (type: string) => {
@@ -172,20 +127,6 @@ export const GoalsPlanning: React.FC = () => {
     }
   }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'on-track':
-      case 'ahead':
-        return <CheckCircle className="h-4 w-4 text-green-600" />
-      case 'behind':
-        return <Clock className="h-4 w-4 text-yellow-600" />
-      case 'at-risk':
-        return <AlertTriangle className="h-4 w-4 text-red-600" />
-      default:
-        return <Clock className="h-4 w-4 text-gray-600" />
-    }
-  }
-
   const calculateProgress = (current: number, target: number) => {
     return Math.min((current / target) * 100, 100)
   }
@@ -195,10 +136,9 @@ export const GoalsPlanning: React.FC = () => {
   }, 0) / goals.length
 
   const tabs = [
-    { id: 'overview', label: 'Goals Overview', icon: Target },
-    { id: 'retirement', label: 'Retirement Planning', icon: TrendingUp },
-    { id: 'milestones', label: 'Financial Milestones', icon: CheckCircle },
-    { id: 'planning', label: 'Planning Tools', icon: Calculator }
+    { id: 'goals', label: 'Goals Overview', icon: Target },
+    { id: 'planning', label: 'Planning Tools', icon: Calculator },
+    { id: 'projections', label: 'Projections', icon: TrendingUp }
   ]
 
   return (
@@ -216,10 +156,6 @@ export const GoalsPlanning: React.FC = () => {
             <Calculator className="h-4 w-4 mr-2" />
             Goal Calculator
           </Button>
-          <Button onClick={() => setShowAddGoal(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Goal
-          </Button>
         </div>
       </div>
 
@@ -231,7 +167,7 @@ export const GoalsPlanning: React.FC = () => {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setActiveTab(tab.id as 'goals' | 'planning' | 'projections')}
                 className={`flex items-center gap-2 py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? 'border-primary text-primary'
@@ -247,7 +183,7 @@ export const GoalsPlanning: React.FC = () => {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'overview' && (
+      {activeTab === 'goals' && (
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -374,7 +310,7 @@ export const GoalsPlanning: React.FC = () => {
         </div>
       )}
 
-      {activeTab === 'retirement' && (
+      {activeTab === 'projections' && (
         <div className="space-y-6">
           {/* Retirement Summary */}
           <Card>
@@ -447,57 +383,6 @@ export const GoalsPlanning: React.FC = () => {
                   <span className="font-semibold">Increase Contributions</span>
                   <span className="text-sm text-muted-foreground">Optimize retirement savings</span>
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {activeTab === 'milestones' && (
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Financial Milestones</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {milestones.map((milestone) => {
-                  const progress = calculateProgress(milestone.currentValue, milestone.targetValue)
-                  return (
-                    <div key={milestone.id} className={`p-4 border rounded-lg ${milestone.isCompleted ? 'bg-green-50 border-green-200' : ''}`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          {milestone.isCompleted ? (
-                            <CheckCircle className="h-6 w-6 text-green-600" />
-                          ) : (
-                            <Clock className="h-6 w-6 text-gray-400" />
-                          )}
-                          <div>
-                            <h3 className="font-semibold">{milestone.title}</h3>
-                            <p className="text-sm text-muted-foreground">{milestone.description}</p>
-                          </div>
-                        </div>
-                        <Badge variant={milestone.isCompleted ? 'default' : 'outline'} className={milestone.isCompleted ? 'bg-green-100 text-green-800' : ''}>
-                          {milestone.isCompleted ? 'Completed' : 'In Progress'}
-                        </Badge>
-                      </div>
-                      {!milestone.isCompleted && (
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span>${milestone.currentValue.toLocaleString()} of ${milestone.targetValue.toLocaleString()}</span>
-                            <span className="font-medium">{progress.toFixed(1)}%</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div
-                              className="h-2 rounded-full bg-primary transition-all"
-                              style={{ width: `${Math.min(progress, 100)}%` }}
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
               </div>
             </CardContent>
           </Card>

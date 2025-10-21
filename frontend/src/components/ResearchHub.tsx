@@ -6,7 +6,7 @@ import { Input } from './ui/input'
 import { 
   Search, 
   BookOpen, 
-  TrendingUp, 
+  
   BarChart3,
   Star,
   Clock,
@@ -16,11 +16,11 @@ import {
   Bookmark,
   Share,
   Building,
-  DollarSign,
-  Calendar,
+  
+  
   FileText,
   Globe,
-  Users
+  
 } from 'lucide-react'
 
 interface ResearchReport {

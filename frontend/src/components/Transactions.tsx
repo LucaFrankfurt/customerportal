@@ -3,16 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Badge } from './ui/badge'
-import { 
-  Search, 
-  Download, 
-  ArrowUpDown, 
-  Calendar,
+import {
+  Search,
+  Download,
   Filter,
   ArrowUp,
   ArrowDown,
-  RotateCcw
-} from 'lucide-react'
+  ArrowUpDown,
+  RotateCcw,
+} from 'lucide-react';
 
 interface Transaction {
   id: string

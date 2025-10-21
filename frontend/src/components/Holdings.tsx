@@ -5,14 +5,13 @@ import { Input } from './ui/input'
 import { Badge } from './ui/badge'
 import { 
   Search, 
-  Filter, 
+   
   ArrowUpDown, 
   TrendingUp, 
   TrendingDown,
   Eye,
   DollarSign,
-  Percent,
-  Calendar
+  Percent
 } from 'lucide-react'
 
 interface Holding {

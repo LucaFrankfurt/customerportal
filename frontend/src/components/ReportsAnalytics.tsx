@@ -13,7 +13,7 @@ import {
   PieChart,
   TrendingUp,
   FileSpreadsheet,
-  Printer,
+  
   Mail,
   Settings,
   Clock,

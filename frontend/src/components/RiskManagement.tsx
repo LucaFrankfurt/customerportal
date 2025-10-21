@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
-import { Input } from './ui/input'
 import { 
   Shield, 
   TrendingDown, 
@@ -13,11 +12,9 @@ import {
   Calculator,
   Settings,
   Play,
-  Pause,
   RefreshCw,
   Eye,
-  FileText,
-  Target
+  FileText
 } from 'lucide-react'
 
 interface RiskMetric {
